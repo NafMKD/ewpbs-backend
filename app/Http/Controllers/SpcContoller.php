@@ -94,13 +94,13 @@ class SpcContoller extends Controller
 
         // updating instance of spc 
         $data->update([
-            'spc_name' => $request->get('spc_name')
+            'spc_name' => ($request->get('spc_name')==null)?$data->spc_name:$request->get('spc_name')
         ]);
 
         // updating instance of spc account
         $data->spcAccount->update([
-            'spc_username' => $request->get('spc_username'),
-            'spc_password' => Hash::make($request->get('spc_password'))
+            'spc_username' => ($request->get('spc_username')==null)?$data->spcAccount->spc_username:$request->get('spc_username'),
+            'spc_password' => ($request->get('spc_password')==null)?$data->spcAccount->spc_password:Hash::make($request->get('spc_password'))
         ]);
 
         // returning updated instance with instance of resource

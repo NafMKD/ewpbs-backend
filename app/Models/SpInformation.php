@@ -28,6 +28,6 @@ class SpInformation extends Model
     // service provider mave many event logs
     public function spEventLog()
     {
-        return $this->hasMany(SpAccount::class, 'sp_id', 'sp_id');
+        return $this->hasMany(SpEventLog::class, 'sp_id', 'sp_id');
     }
 }
