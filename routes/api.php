@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SpContoller;
+use App\Http\Controllers\SpcEventLogController;
 use App\Http\Controllers\SpcContoller;
 use App\Http\Controllers\CustomerInformationController;
 use Illuminate\Http\Request;
@@ -33,6 +34,9 @@ Route::get('/spc', [SpcContoller::class, 'index']);
 Route::get('/spc/{id}', [SpcContoller::class, 'show']);
 Route::post('/spc', [SpcContoller::class, 'store']);
 Route::put('/spc/{id}', [SpcContoller::class, 'update']);
+Route::get('/spc/eventlog/spc/{id}', [SpcEventLogController::class, 'index']); 
+Route::get('/spc/eventlog/{id}', [SpcEventLogController::class, 'show']); 
+Route::post('/spc/eventlog', [SpcEventLogController::class, 'store']);
 
 // service provider Route
 Route::get('/sp', [SpContoller::class, 'index']);

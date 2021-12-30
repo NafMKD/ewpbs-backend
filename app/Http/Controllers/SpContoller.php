@@ -26,7 +26,13 @@ class SpContoller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $request->validate([
+        //     'spc_id'=>'required|',	
+        //     'sp_name',	
+        //     'sp_region',	
+        //     'sp_zone',	
+        //     'sp_town'
+        // ]);
     }
 
     /**
