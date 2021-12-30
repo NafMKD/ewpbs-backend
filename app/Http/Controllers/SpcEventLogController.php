@@ -46,9 +46,7 @@ class SpcEventLogController extends Controller
         ]);
 
         // saving the new instance
-        $data->save();
-
-        
+        $data->save();        
 
         // returning the new event log instance
         return $data;
