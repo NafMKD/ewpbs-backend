@@ -19,15 +19,21 @@ class SpcInformation extends Model
 
     protected $guarded = [];
 
-    // have one account
+    // spc have one account
     public function spcAccount()
     {
         return $this->hasOne(SpcAccount::class, 'spc_id', 'spc_id');
     }
 
-    // have many event logs
+    // spc have many event logs
     public function spcEventLog()
     {
         return $this->hasMany(SpcEventLog::class, 'spc_id', 'spc_id');
+    }
+
+    // spc have many tarifs
+    public function spcTarif()
+    {
+        return $this->hasMany(SpcTarif::class, 'spc_id', 'spc_id');
     }
 }

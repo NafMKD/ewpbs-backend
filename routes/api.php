@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SpcTarifController;
 use App\Http\Controllers\SpContoller;
 use App\Http\Controllers\SpcEventLogController;
 use App\Http\Controllers\SpcContoller;
@@ -37,6 +38,10 @@ Route::put('/spc/{id}', [SpcContoller::class, 'update']);
 Route::get('/spc/eventlog/spc/{id}', [SpcEventLogController::class, 'index']); 
 Route::get('/spc/eventlog/{id}', [SpcEventLogController::class, 'show']); 
 Route::post('/spc/eventlog', [SpcEventLogController::class, 'store']);
+Route::get('/spc/tarif/spc/{id}', [SpcTarifController::class, 'index']);
+Route::get('/spc/tarif/{id}', [SpcTarifController::class, 'show']); 
+Route::post('/spc/tarif', [SpcTarifController::class, 'store']);
+Route::put('/spc/tarif/{id}', [SpcTarifController::class, 'update']);
 
 // service provider Route
 Route::get('/sp', [SpContoller::class, 'index']);

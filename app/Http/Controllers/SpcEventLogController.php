@@ -19,7 +19,7 @@ class SpcEventLogController extends Controller
         // creating instance of eventlog parent class
         $data = SpcInformation::find($id);
 
-        // returning resource escaped event log belongs to one spc
+        // returning resource event log instance
         return new SpcEventLogResource($data);
     }
 
@@ -33,7 +33,7 @@ class SpcEventLogController extends Controller
     {
         // validating request data
         $request->validate([
-            'spc_id' => 'required|integer|exists:App\Models\SpcEventLog,spc_id',
+            'spc_id' => 'required|integer|exists:App\Models\SpcInformation,spc_id',
             'spc_event_action' => 'required|string|max:150',
             'spc_event_detail' => 'required|string'
         ]);

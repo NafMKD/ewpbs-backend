@@ -22,7 +22,7 @@ class CreateSpcTarifsTable extends Migration
             $table->timestamps();
             $table->foreign('spc_id')
                 ->references('spc_id')
-                ->on('sp_information')
+                ->on('spc_information')
                 ->onDelete('cascade');
         });
     }
