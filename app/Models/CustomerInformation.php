@@ -25,7 +25,7 @@ class CustomerInformation extends Model
     // customer has one account 
     public function customerAccount()
     {
-        return $this->hasOne(CustomerAcount::class, 'customer_id', 'customer_id');
+        return $this->hasOne(CustomerAccount::class, 'customer_id', 'customer_id');
     }
 
     // customer may have multiple eventlogs

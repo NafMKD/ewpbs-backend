@@ -9,7 +9,11 @@ class CustomerEventeLog extends Model
 {
     use HasFactory;
 
-     // Eventlog belongs to one customer
+    // mass filling
+    protected $fillable = [
+     'customer_id', 'customer_event_action', 'customer_event_detail'
+    ];
+    // Eventlog belongs to one customer
     public function CustomerInformation()
     {
         return $this->belongsTo(CustomerInformation::class, 'customer_id', 'customer_id');

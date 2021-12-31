@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerEventLogController;
 use App\Http\Controllers\SpcTarifController;
 use App\Http\Controllers\SpInformaionContoller;
 use App\Http\Controllers\SpcEventLogController;
@@ -26,12 +27,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+####################################################################################################
 
 // customer Route
 Route::get('/customer', [CustomerInformationController::class, 'index']);
 Route::get('/customer/{id}', [CustomerInformationController::class, 'show']);
 Route::post('/customer', [CustomerInformationController::class, 'store']);
 Route::put('/customer/{id}', [CustomerInformationController::class, 'update']);
+// customer event log Route
+Route::get('/customer/eventlog/customer/{id}', [CustomerEventLogController::class, 'index']); 
+Route::get('/customer/eventlog/{id}', [CustomerEventLogController::class, 'show']); 
+Route::post('/customer/eventlog', [CustomerEventLogController::class, 'store']);
 
 ####################################################################################################
 // service provider category Route
