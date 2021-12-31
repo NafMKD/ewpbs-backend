@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\SpcTarifController;
-use App\Http\Controllers\SpContoller;
+use App\Http\Controllers\SpInformaionContoller;
 use App\Http\Controllers\SpcEventLogController;
 use App\Http\Controllers\SpcContoller;
 use App\Http\Controllers\CustomerInformationController;
+use App\Http\Controllers\SpEmployeeEventLogController;
 use App\Http\Controllers\SpEmployeeInformationController;
 use App\Http\Controllers\SpEventLogController;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ Route::get('/spc', [SpcContoller::class, 'index']);
 Route::get('/spc/{id}', [SpcContoller::class, 'show']);
 Route::post('/spc', [SpcContoller::class, 'store']);
 Route::put('/spc/{id}', [SpcContoller::class, 'update']);
-// spc event log Route
+// spc eventlog Route
 Route::get('/spc/eventlog/spc/{id}', [SpcEventLogController::class, 'index']); 
 Route::get('/spc/eventlog/{id}', [SpcEventLogController::class, 'show']); 
 Route::post('/spc/eventlog', [SpcEventLogController::class, 'store']);
@@ -51,11 +52,11 @@ Route::put('/spc/tarif/{id}', [SpcTarifController::class, 'update']);
 ####################################################################################################
 
 // service provider Route
-Route::get('/sp', [SpContoller::class, 'index']);
-Route::get('/sp/{id}', [SpContoller::class, 'show']);
-Route::post('/sp', [SpContoller::class, 'store']);
-Route::put('/sp/{id}', [SpContoller::class, 'update']);
-// sp event Route
+Route::get('/sp', [SpInformaionContoller::class, 'index']);
+Route::get('/sp/{id}', [SpInformaionContoller::class, 'show']);
+Route::post('/sp', [SpInformaionContoller::class, 'store']);
+Route::put('/sp/{id}', [SpInformaionContoller::class, 'update']);
+// sp eventlog Route
 Route::get('/sp/eventlog/sp/{id}', [SpEventLogController::class, 'index']);
 Route::get('/sp/eventlog/{id}', [SpEventLogController::class, 'show']);
 Route::post('/sp/eventlog', [SpEventLogController::class, 'store']);
@@ -64,3 +65,10 @@ Route::post('/sp/eventlog', [SpEventLogController::class, 'store']);
 
 // sp employee Route
 Route::get('/spemployee', [SpEmployeeInformationController::class, 'index']);
+Route::get('/spemployee/{id}', [SpEmployeeInformationController::class, 'show']);
+Route::put('/spemployee/{id}', [SpEmployeeInformationController::class, 'update']);
+Route::post('/spemployee', [SpEmployeeInformationController::class, 'store']);
+// sp employee eventlog Route
+Route::get('/spemployee/eventlog/spemployee/{id}', [SpEmployeeEventLogController::class, 'index']);
+Route::get('/spemployee/eventlog/{id}', [SpEmployeeEventLogController::class, 'show']);
+Route::post('/spemployee/eventlog', [SpEmployeeEventLogController::class, 'store']);

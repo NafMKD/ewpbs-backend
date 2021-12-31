@@ -9,8 +9,10 @@ class SpInformation extends Model
 {
     use HasFactory;
 
+    // specifing custome primary key 
     protected $primaryKey = "sp_id";
 
+    // specifing fillable columns in database
     protected $fillable = [
         'spc_id',	
         'sp_name',	

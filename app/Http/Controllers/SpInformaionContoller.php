@@ -8,7 +8,7 @@ use App\Models\SpInformation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class SpContoller extends Controller
+class SpInformaionContoller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -75,6 +75,7 @@ class SpContoller extends Controller
      */
     public function show($id)
     {
+        // returning resource instance of sp 
         return new SpResource(SpInformation::find($id));
     }
 
