@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CustomerEventLogResource;
-use App\Models\CustomerEventLog;
-use App\Models\CustomerInformation;
+use App\Http\Resources\AdminEventLogResourse;
+use App\Models\AdminEventLog;
+use App\Models\AdminInformation;
 use Illuminate\Http\Request;
 
-class CustomerEventLogController extends Controller
+class AdminEventLogController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,9 @@ class CustomerEventLogController extends Controller
     public function index($id)
     {
         // creating instance of eventlog parent class
-        $data = CustomerInformation::find($id);
+        $data=AdminInformation::find($id);
 
-        // returning resource event log instance
-        return new CustomerEventLogResource($data);
+        return new AdminEventLogResourse($data);
     }
 
     /**
@@ -31,28 +30,30 @@ class CustomerEventLogController extends Controller
      */
     public function store(Request $request)
     {
-        // validating request data
+        //validating admin log request
         $request->validate([
-            'customer_id' => 'required|integer|exists:App\Models\CustomerInformation,customer_id',
-            'customer_event_action' => 'required|string|max:150',
-            'customer_event_detail' => 'required|string'
+            'admin_id'=> 'required|integer|exists:App\Models\AdminInformation,admin_id',
+            'admin_event_action'=> 'required|string|max:150',
+            'admin_event_detail'=> 'required|string'
         ]);
 
-        // creating new instance of event log
-        $data = new CustomerEventLog([
-            'customer_id' => $request->get('customer_id'),
-            'customer_event_action' => $request->get('customer_event_action'),
-            'customer_event_detail' => $request->get('customer_event_detail')
+        //creating instance of admineventlog
+
+        $data = new AdminEventLog([
+            'admin_id'=>$request->get('admin_id'),
+            'admin_event_action'=>$request->get('admin_event_action'),
+            'admin_event_detail'=>$request->get('admin_event_detail')
         ]);
 
-        // saving the new instance
-        $data->save();        
+        //saving new instance
 
-        // returning the new event log instance
+        $data->save();
+
+        // returning new instance
         return $data;
     }
 
-    /**CustomerEventLog
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -60,8 +61,8 @@ class CustomerEventLogController extends Controller
      */
     public function show($id)
     {
-         // returning instance of event log based on id
-         return CustomerEventLog::find($id);
+        //return instance of admineventlog controller based on id
+        return AdminEventLog::find($id);
     }
 
     /**

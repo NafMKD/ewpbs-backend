@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\AdminEventLogController;
 use App\Http\Controllers\CustomerEventLogController;
 use App\Http\Controllers\SpcTarifController;
 use App\Http\Controllers\SpInformaionContoller;
 use App\Http\Controllers\SpcEventLogController;
 use App\Http\Controllers\SpcContoller;
 use App\Http\Controllers\CustomerInformationController;
+use App\Http\Controllers\AdminInformationController;
 use App\Http\Controllers\SpEmployeeEventLogController;
 use App\Http\Controllers\SpEmployeeInformationController;
 use App\Http\Controllers\SpEventLogController;
@@ -78,3 +80,19 @@ Route::post('/spemployee', [SpEmployeeInformationController::class, 'store']);
 Route::get('/spemployee/eventlog/spemployee/{id}', [SpEmployeeEventLogController::class, 'index']);
 Route::get('/spemployee/eventlog/{id}', [SpEmployeeEventLogController::class, 'show']);
 Route::post('/spemployee/eventlog', [SpEmployeeEventLogController::class, 'store']);
+
+
+#####################################################################################################
+
+//Admin Route
+
+Route::get('/admin', [AdminInformationController::class, 'index']);
+Route::get('/admin/{id}', [AdminInformationController::class, 'show']);
+Route::post('/admin', [AdminInformationController::class, 'store']);
+Route::put('/admin/{id}', [AdminInformationController::class, 'update']); 
+
+// Admin event log Route
+
+Route::get('/admin/eventlog/admin/{id}', [AdminEventLogController::class, 'index']);
+Route::get('admin/eventlog/{id}', [AdminEventLogController::class, 'show']);
+Route::post('admin/eventlog', [AdminEventLogController::class, 'store']);

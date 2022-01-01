@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CustomerEventeLog;
 use App\Models\CustomerInformation;
 use Illuminate\Http\Request;
 use App\Http\Resources\CustomersResource;
@@ -125,7 +124,7 @@ class CustomerInformationController extends Controller
         // updating customer account
         $data->customerAccount->update([
             'customer_username' => ($request->get('customer_username')==null)?$data->customerAccount->customer_username:$request->get('customer_username'),
-            'customer_password' => $request->get('customer_password')?$data->customerAccount->customer_password:Hash::make($request->get('customer_password'))
+            'customer_password' => ($request->get('customer_password')==null)?$data->customerAccount->customer_password:Hash::make($request->get('customer_password')),
         ]);
 
         // returning resource instance of customer
