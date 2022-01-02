@@ -31,70 +31,100 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 ####################################################################################################
-
 // customer Route
-Route::get('/customer', [CustomerInformationController::class, 'index']);
-Route::get('/customer/{id}', [CustomerInformationController::class, 'show']);
-Route::post('/customer', [CustomerInformationController::class, 'store']);
-Route::put('/customer/{id}', [CustomerInformationController::class, 'update']);
-// customer event log Route
-Route::get('/customer/eventlog/customer/{id}', [CustomerEventLogController::class, 'index']); 
-Route::get('/customer/eventlog/{id}', [CustomerEventLogController::class, 'show']); 
-Route::post('/customer/eventlog', [CustomerEventLogController::class, 'store']);
+Route::prefix('customer')->group(function () {
+    Route::get('/', [CustomerInformationController::class, 'index']);
+    Route::get('/{id}', [CustomerInformationController::class, 'show']);
+    Route::post('', [CustomerInformationController::class, 'store']);
+    Route::put('/{id}', [CustomerInformationController::class, 'update']);
+    // customer event log Route
+    Route::prefix('/eventlog')->group(function () {
+        Route::get('/customer/{id}', [CustomerEventLogController::class, 'index']); 
+        Route::get('/{id}', [CustomerEventLogController::class, 'show']); 
+        Route::post('/', [CustomerEventLogController::class, 'store']);
+    });
+});
+
 
 ####################################################################################################
 // service provider category Route
-Route::get('/spc', [SpcContoller::class, 'index']);
-Route::get('/spc/{id}', [SpcContoller::class, 'show']);
-Route::post('/spc', [SpcContoller::class, 'store']);
-Route::put('/spc/{id}', [SpcContoller::class, 'update']);
-// spc eventlog Route
-Route::get('/spc/eventlog/spc/{id}', [SpcEventLogController::class, 'index']); 
-Route::get('/spc/eventlog/{id}', [SpcEventLogController::class, 'show']); 
-Route::post('/spc/eventlog', [SpcEventLogController::class, 'store']);
-// spc tarif Route
-Route::get('/spc/tarif/spc/{id}', [SpcTarifController::class, 'index']);
-Route::get('/spc/tarif/{id}', [SpcTarifController::class, 'show']); 
-Route::post('/spc/tarif', [SpcTarifController::class, 'store']);
-Route::put('/spc/tarif/{id}', [SpcTarifController::class, 'update']);
+Route::prefix('spc')->group(function () {
+    Route::get('/', [SpcContoller::class, 'index']);
+    Route::get('/{id}', [SpcContoller::class, 'show']);
+    Route::post('/', [SpcContoller::class, 'store']);
+    Route::put('/{id}', [SpcContoller::class, 'update']);
+    // spc eventlog Route
+    Route::prefix('/eventlog')->group(function () {
+        Route::get('/spc/{id}', [SpcEventLogController::class, 'index']); 
+        Route::get('/{id}', [SpcEventLogController::class, 'show']); 
+        Route::post('/', [SpcEventLogController::class, 'store']);
+    });
+    // spc tarif Route
+    Route::prefix('/tarif')->group(function () {
+        Route::get('/spc/{id}', [SpcTarifController::class, 'index']);
+        Route::get('/{id}', [SpcTarifController::class, 'show']); 
+        Route::post('/', [SpcTarifController::class, 'store']);
+        Route::put('/{id}', [SpcTarifController::class, 'update']);
+    });    
+});
+
+
 
 ####################################################################################################
 
 // service provider Route
-Route::get('/sp', [SpInformaionContoller::class, 'index']);
-Route::get('/sp/{id}', [SpInformaionContoller::class, 'show']);
-Route::post('/sp', [SpInformaionContoller::class, 'store']);
-Route::put('/sp/{id}', [SpInformaionContoller::class, 'update']);
-// sp eventlog Route
-Route::get('/sp/eventlog/sp/{id}', [SpEventLogController::class, 'index']);
-Route::get('/sp/eventlog/{id}', [SpEventLogController::class, 'show']);
-Route::post('/sp/eventlog', [SpEventLogController::class, 'store']);
-// sp meter information
-Route::get('/sp/meter/sp/{id}', [MeterInfromationController::class, 'index']);
-Route::get('/sp/meter/{id}', [MeterInfromationController::class, 'show']);
-Route::post('/sp/meter', [MeterInfromationController::class, 'store']);
-Route::put('/sp/meter/{id}', [MeterInfromationController::class, 'update']);
+Route::prefix('sp')->group(function () {
+    Route::get('/', [SpInformaionContoller::class, 'index']);
+    Route::get('/{id}', [SpInformaionContoller::class, 'show']);
+    Route::post('/', [SpInformaionContoller::class, 'store']);
+    Route::put('/{id}', [SpInformaionContoller::class, 'update']);
+    // sp eventlog Route
+    Route::prefix('/eventlog')->group(function () {
+        Route::get('/sp/{id}', [SpEventLogController::class, 'index']);
+        Route::get('/{id}', [SpEventLogController::class, 'show']);
+        Route::post('/', [SpEventLogController::class, 'store']);
+    });
+    // sp meter information
+    Route::prefix('/meter')->group(function () {
+        Route::get('/sp/{id}', [MeterInfromationController::class, 'index']);
+        Route::get('/{id}', [MeterInfromationController::class, 'show']);
+        Route::post('/', [MeterInfromationController::class, 'store']);
+        Route::put('/{id}', [MeterInfromationController::class, 'update']);
+    });
+});
+
+
 
 ####################################################################################################
 
 // sp employee Route
-Route::get('/spemployee', [SpEmployeeInformationController::class, 'index']);
-Route::get('/spemployee/{id}', [SpEmployeeInformationController::class, 'show']);
-Route::put('/spemployee/{id}', [SpEmployeeInformationController::class, 'update']);
-Route::post('/spemployee', [SpEmployeeInformationController::class, 'store']);
-// sp employee eventlog Route
-Route::get('/spemployee/eventlog/spemployee/{id}', [SpEmployeeEventLogController::class, 'index']);
-Route::get('/spemployee/eventlog/{id}', [SpEmployeeEventLogController::class, 'show']);
-Route::post('/spemployee/eventlog', [SpEmployeeEventLogController::class, 'store']);
+Route::prefix('spemployee')->group(function () {
+    Route::get('/', [SpEmployeeInformationController::class, 'index']);
+    Route::get('/{id}', [SpEmployeeInformationController::class, 'show']);
+    Route::put('/{id}', [SpEmployeeInformationController::class, 'update']);
+    Route::post('/', [SpEmployeeInformationController::class, 'store']);
+    // sp employee eventlog Route
+    Route::prefix('/eventlog')->group(function () {
+        Route::get('/spemployee/{id}', [SpEmployeeEventLogController::class, 'index']);
+        Route::get('/{id}', [SpEmployeeEventLogController::class, 'show']);
+        Route::post('/', [SpEmployeeEventLogController::class, 'store']);
+    });
+    
+});
+
 
 #####################################################################################################
 
 //Admin Route
-Route::get('/admin', [AdminInformationController::class, 'index']);
-Route::get('/admin/{id}', [AdminInformationController::class, 'show']);
-Route::post('/admin', [AdminInformationController::class, 'store']);
-Route::put('/admin/{id}', [AdminInformationController::class, 'update']); 
-// Admin event log Route
-Route::get('/admin/eventlog/admin/{id}', [AdminEventLogController::class, 'index']);
-Route::get('admin/eventlog/{id}', [AdminEventLogController::class, 'show']);
-Route::post('admin/eventlog', [AdminEventLogController::class, 'store']);
+Route::prefix('admin')->group(function () {
+    Route::get('/', [AdminInformationController::class, 'index']);
+    Route::get('/{id}', [AdminInformationController::class, 'show']);
+    Route::post('/', [AdminInformationController::class, 'store']);
+    Route::put('/{id}', [AdminInformationController::class, 'update']); 
+    // Admin event log Route
+    Route::prefix('/eventlog')->group(function () {
+        Route::get('/admin/{id}', [AdminEventLogController::class, 'index']);
+        Route::get('/{id}', [AdminEventLogController::class, 'show']);
+        Route::post('/', [AdminEventLogController::class, 'store']);
+    });
+});
