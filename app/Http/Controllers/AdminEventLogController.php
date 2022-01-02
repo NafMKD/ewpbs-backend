@@ -19,6 +19,7 @@ class AdminEventLogController extends Controller
         // creating instance of eventlog parent class
         $data=AdminInformation::find($id);
 
+        // returning event log resource instance
         return new AdminEventLogResourse($data);
     }
 

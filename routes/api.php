@@ -8,6 +8,7 @@ use App\Http\Controllers\SpcEventLogController;
 use App\Http\Controllers\SpcContoller;
 use App\Http\Controllers\CustomerInformationController;
 use App\Http\Controllers\AdminInformationController;
+use App\Http\Controllers\MeterInfromationController;
 use App\Http\Controllers\SpEmployeeEventLogController;
 use App\Http\Controllers\SpEmployeeInformationController;
 use App\Http\Controllers\SpEventLogController;
@@ -68,6 +69,11 @@ Route::put('/sp/{id}', [SpInformaionContoller::class, 'update']);
 Route::get('/sp/eventlog/sp/{id}', [SpEventLogController::class, 'index']);
 Route::get('/sp/eventlog/{id}', [SpEventLogController::class, 'show']);
 Route::post('/sp/eventlog', [SpEventLogController::class, 'store']);
+// sp meter information
+Route::get('/sp/meter/sp/{id}', [MeterInfromationController::class, 'index']);
+Route::get('/sp/meter/{id}', [MeterInfromationController::class, 'show']);
+Route::post('/sp/meter', [MeterInfromationController::class, 'store']);
+Route::put('/sp/meter/{id}', [MeterInfromationController::class, 'update']);
 
 ####################################################################################################
 
@@ -81,18 +87,14 @@ Route::get('/spemployee/eventlog/spemployee/{id}', [SpEmployeeEventLogController
 Route::get('/spemployee/eventlog/{id}', [SpEmployeeEventLogController::class, 'show']);
 Route::post('/spemployee/eventlog', [SpEmployeeEventLogController::class, 'store']);
 
-
 #####################################################################################################
 
 //Admin Route
-
 Route::get('/admin', [AdminInformationController::class, 'index']);
 Route::get('/admin/{id}', [AdminInformationController::class, 'show']);
 Route::post('/admin', [AdminInformationController::class, 'store']);
 Route::put('/admin/{id}', [AdminInformationController::class, 'update']); 
-
 // Admin event log Route
-
 Route::get('/admin/eventlog/admin/{id}', [AdminEventLogController::class, 'index']);
 Route::get('admin/eventlog/{id}', [AdminEventLogController::class, 'show']);
 Route::post('admin/eventlog', [AdminEventLogController::class, 'store']);

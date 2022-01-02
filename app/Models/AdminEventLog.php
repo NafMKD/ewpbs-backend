@@ -15,7 +15,8 @@ class AdminEventLog extends Model
         'admin_id',	'admin_event_action',	'admin_event_detail'
     ];
 
-    public function AdminInformation()
+    // event belongs to one admin
+    public function adminInformation()
     {
         return $this->belongsTo(AdminInformation::class, 'admin_id', 'admin_id');
     }

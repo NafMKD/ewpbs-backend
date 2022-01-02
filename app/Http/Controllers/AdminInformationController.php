@@ -19,7 +19,7 @@ class AdminInformationController extends Controller
      */
     public function index()
     {
-        //returning all admin;
+        //returning all admin
         return AdminInformation::all();
     }
 
@@ -113,7 +113,6 @@ class AdminInformationController extends Controller
         ]);
 
         // returning Resource instance of Admin
-
         return new AdminResource($data);
 
     }

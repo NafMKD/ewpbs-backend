@@ -32,4 +32,10 @@ class SpInformation extends Model
     {
         return $this->hasMany(SpEventLog::class, 'sp_id', 'sp_id');
     }
+
+    // service provider mave many meter
+    public function meterInformation()
+    {
+        return $this->hasMany(MeterInformation::class, 'sp_id', 'sp_id');
+    }
 }

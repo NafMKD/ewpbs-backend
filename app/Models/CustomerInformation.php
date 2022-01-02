@@ -33,4 +33,10 @@ class CustomerInformation extends Model
     {
         return $this->hasMany(CustomerEventLog::class, 'customer_id', 'customer_id');
     }
+
+    // customer may have multiple meter
+    public function meterInformation()
+    {
+        return $this->hasMany(MeterInformation::class, 'customer_id', 'customer_id');
+    }
 }
