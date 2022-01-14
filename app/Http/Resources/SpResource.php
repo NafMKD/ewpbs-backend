@@ -23,7 +23,8 @@ class SpResource extends JsonResource
             'created_at' =>	$this->created_at,
             'updated_at' => $this->updated_at,
             'sp_account' => $this->spAccount,
-            'sp_eventlog' => $this->spEventLog
+            'sp_eventlog' => $this->spEventLog,
+            'customer_information' => $this->customerInformation
         ];
     }
 }

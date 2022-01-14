@@ -28,4 +28,10 @@ class SpEmployeeInformation extends Model
     {
         return $this->hasMany(SpEmployeeEventLog::class, 'sp_emp_id', 'sp_emp_id');
     }
+
+    // employee has many readings
+    public function employeeReading()
+    {
+        return $this->hasMany(MeterRecordInformation::class, 'sp_emp_id', 'sp_emp_id');
+    }
 }

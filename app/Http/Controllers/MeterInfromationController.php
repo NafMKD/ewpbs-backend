@@ -22,6 +22,16 @@ class MeterInfromationController extends Controller
         // returning resource meter instance
         return new MeterInformationResource($data);
     }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function searchSerial($id)
+    {
+        return MeterInformation::where('meter_serial','like',$id.'%')->get();
+    }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -35,9 +45,9 @@ class MeterInfromationController extends Controller
         $request->validate([
             'customer_id' => 'required|integer|exists:App\Models\CustomerInformation,customer_id',
             'sp_id' => 'required|integer|exists:App\Models\SpInformation,sp_id',
-            'meter_serial' => 'required|string',
-            'meter_latitude' => 'required|string',
-            'meter_longitude' => 'required|string'
+            'meter_serial' => 'required|string|unique:App\Models\MeterInformation,meter_serial',
+            'meter_latitude' => 'required|numeric',
+            'meter_longitude' => 'required|numeric'
         ]);
 
         // creating new instance of meter

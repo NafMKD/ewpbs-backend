@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class SpAccount extends Model
+class SpAccount extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     // fillable columns
     protected $fillable = [

@@ -17,6 +17,7 @@ class CreateCustomerInformationSpInformationTable extends Migration
             $table->id('cisi_id');
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('sp_id');
+            $table->boolean('status');
             $table->timestamps();
             $table->foreign('customer_id')
                 ->references('customer_id')

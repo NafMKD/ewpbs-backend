@@ -18,8 +18,8 @@ class CreateMeterInformationTable extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('sp_id');
             $table->string('meter_serial');
-            $table->string('meter_latitude');
-            $table->string('meter_longitude');
+            $table->decimal('meter_latitude', 10, 7);
+            $table->decimal('meter_longitude', 10, 7);
             $table->timestamps();
             $table->foreign('customer_id')
                 ->references('customer_id')

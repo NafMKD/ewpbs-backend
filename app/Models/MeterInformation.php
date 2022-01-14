@@ -29,4 +29,10 @@ class MeterInformation extends Model
     {
         return $this->belongsTo(CustomerInformation::class, 'customer_id', 'customer_id');
     }
+
+    // meter has many readings
+    public function meterReading()
+    {
+        return $this->hasMany(MeterRecordInformation::class, 'meter_id', 'meter_id');
+    }
 }

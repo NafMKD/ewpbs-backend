@@ -13,7 +13,7 @@ class CreateCustomerEventeLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('customer_evente_logs', function (Blueprint $table) {
+        Schema::create('customer_event_logs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id');
             $table->string('customer_event_action');

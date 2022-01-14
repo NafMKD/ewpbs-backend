@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class AdminAccount extends Model
+class AdminAccount extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
     // mass fillin of data into account
     protected $fillable = [
         'admin_id', 'admin_username', 'admin_password', 'remember_token', 'admin_last_login', 'admin_last_logout'

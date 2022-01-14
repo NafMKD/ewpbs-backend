@@ -18,6 +18,8 @@ class CreateHistoryBillsTable extends Migration
             $table->unsignedBigInteger('sp_id');
             $table->unsignedBigInteger('customer_id');
             $table->decimal('hs_meter_reading');
+            $table->decimal('hs_meter_reading_previous');
+            $table->decimal('hs_meter_reading_tarif');
             $table->decimal('hs_amount_birr');
             $table->date('hs_month_year');
             $table->decimal('hs_paid_amount');

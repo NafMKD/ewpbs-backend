@@ -15,7 +15,7 @@ class CreateSpcInformationTable extends Migration
     {
         Schema::create('spc_information', function (Blueprint $table) {
             $table->id('spc_id');
-            $table->string('scp_name');
+            $table->string('spc_name');
             $table->timestamps();
         });
     }   

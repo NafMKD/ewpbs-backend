@@ -27,7 +27,8 @@ class CustomersResource extends JsonResource
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
             "customer_account" => $this->customerAccount,
-            "customer_event" => $this->customerEventLog
+            "customer_event" => $this->customerEventLog,
+            "sp_information" => $this->spInformation
         ];
     }
 }

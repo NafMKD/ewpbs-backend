@@ -21,6 +21,8 @@ class SpInformation extends Model
         'sp_town'	
     ];
 
+    protected $guarded = [];
+
     // service provider have one account
     public function spAccount()
     {
@@ -37,5 +39,17 @@ class SpInformation extends Model
     public function meterInformation()
     {
         return $this->hasMany(MeterInformation::class, 'sp_id', 'sp_id');
+    }
+
+    // service provider mave many active bill
+    public function activeBill()
+    {
+        return $this->hasMany(ActiveBill::class, 'sp_id', 'sp_id');
+    }
+
+    // service provider may have many customer
+    public function customerInformation()
+    {
+        return $this->belongsToMany(CustomerInformation::class, 'customer_information_sp_information', 'sp_id','customer_id');
     }
 }

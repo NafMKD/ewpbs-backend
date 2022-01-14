@@ -39,4 +39,16 @@ class CustomerInformation extends Model
     {
         return $this->hasMany(MeterInformation::class, 'customer_id', 'customer_id');
     }
+
+    // customer may have multiple active bill
+    public function activeBill()
+    {
+        return $this->hasMany(ActiveBill::class, 'customer_id', 'customer_id');
+    }
+
+    // customer may have many service provider
+    public function spInformation()
+    {
+        return $this->belongsToMany(SpInformation::class, 'customer_information_sp_information', 'customer_id', 'sp_id');
+    }
 }

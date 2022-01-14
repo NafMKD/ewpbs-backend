@@ -31,7 +31,7 @@ class SpEmployeeInformationController extends Controller
     {
         // valdaation of requested data
         $request->validate([
-            'sp_id'=>'required|numeric|exists:App\Models\SpInformation,spc_id',	
+            'sp_id'=>'required|numeric|exists:App\Models\SpInformation,sp_id',	
             'sp_emp_first_name'=> 'required|string',
             'sp_emp_middle_name' => 'required|string',	
             'sp_emp_last_name' => 'required|string',	
@@ -60,7 +60,7 @@ class SpEmployeeInformationController extends Controller
 
         // creating account instance
         $data_account = new SpEmployeeAccount([
-            'sp_emp_id' => $data->sp_id,	
+            'sp_emp_id' => $data->sp_emp_id,	
             'sp_emp_username' => $request->get('sp_emp_username'),	
             'sp_emp_password' => Hash::make($request->get('sp_emp_password')),   
         ]);
@@ -82,6 +82,30 @@ class SpEmployeeInformationController extends Controller
     {
         // returning resource instance of sp 
         return new SpEmployeeResource(SpEmployeeInformation::find($id));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function spShow($id)
+    {
+        // returning resource instance of sp 
+        return SpEmployeeInformation::where('sp_id',$id)->get();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function search($id)
+    {
+        // returning resource instance of sp 
+        return SpEmployeeInformation::where('sp_emp_id','like','%'.$id.'%')->get();
     }
 
     /**

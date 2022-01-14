@@ -18,6 +18,8 @@ class CreateActiveBillsTable extends Migration
             $table->unsignedBigInteger('sp_id');
             $table->unsignedBigInteger('customer_id');
             $table->decimal('ac_meter_reading');
+            $table->decimal('ac_meter_reading_previous');
+            $table->decimal('ac_meter_reading_tarif');
             $table->decimal('ac_amount_birr');
             $table->date('ac_month_year');
             $table->date('ac_reading_date');

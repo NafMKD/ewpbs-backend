@@ -6,6 +6,8 @@ use App\Models\CustomerInformation;
 use Illuminate\Http\Request;
 use App\Http\Resources\CustomersResource;
 use App\Models\CustomerAccount;
+use App\Models\ActiveBill;
+use App\Models\HistoryBill;
 use Illuminate\Support\Facades\Hash;
 
 class CustomerInformationController extends Controller
@@ -20,12 +22,45 @@ class CustomerInformationController extends Controller
         // returning all cutomers
         return CustomerInformation::all();
     }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search($id)
+    {
+        // returning all cutomers
+        return CustomerInformation::where('customer_id','like','%'.$id.'%')->get();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function spBillShowActive($id, $sp_id)
+    {
+        // returning all cutomers
+        return ActiveBill::where('sp_id', $sp_id)->where('customer_id',$id)->get();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function spBillShowHistory($id, $sp_id)
+    {
+        // returning all cutomers
+        return HistoryBill::where('sp_id', $sp_id)->where('customer_id',$id)->get();
+    }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response 
      */
     public function store(Request $request)
     {
