@@ -6,6 +6,7 @@ use App\Http\Resources\MeterRecordInformationResource;
 use App\Models\MeterRecordInformation;
 use App\Models\SpInformation;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class MeterRecordInformaionController extends Controller
 {
@@ -66,7 +67,8 @@ class MeterRecordInformaionController extends Controller
             'sp_emp_id' => 'required|integer|exists:\App\Models\SpEmployeeInformation,sp_emp_id', 
             'meter_id' => 'required|integer|exists:\App\Models\MeterInformation,meter_id', 
             'meter_reading' => 'required|integer', 
-            'meter_reading_month_year' => 'required|date_format:Y-m-d', 
+            'meter_reading_month_year' => ['required','date_format:Y-m-d',Rule::unique('meter_record_information')->where(function ($query) use ($request) {
+    return $query->where('meter_id', $request->get('meter_id'));})], 
             'meter_reading_date' => 'required|date_format:Y-m-d'
         ]);
 

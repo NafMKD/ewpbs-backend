@@ -37,7 +37,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 ####################################################################################################
-// customer Route
+// customer Route 
 Route::prefix('customer')->group(function () {
     Route::get('/', [CustomerInformationController::class, 'index']);
     Route::get('/{id}', [CustomerInformationController::class, 'show']);
