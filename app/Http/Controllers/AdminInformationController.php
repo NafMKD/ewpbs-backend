@@ -33,10 +33,10 @@ class AdminInformationController extends Controller
     {
         // validating requested data
         $request->validate([
-            'admin_first_name'=> 'required|string|max:50',	
-            'admin_last_name'=> 'required|string|max:50',	
+            'admin_first_name'=> 'required|string|max:50',
+            'admin_last_name'=> 'required|string|max:50',
             'admin_phone'=> 'required|string|unique:App\Models\AdminInformation,admin_phone',
-            'admin_username'=>'required|string|unique:App\Models\AdminAccount,admin_username',	
+            'admin_username'=>'required|string|unique:App\Models\AdminAccount,admin_username',
             'admin_password'=>'required|string|confirmed'
         ]);
 
@@ -48,17 +48,17 @@ class AdminInformationController extends Controller
         ]);
         // saving instance of admin
         $data->save();
-        
+
         //creating account instant
         $data_account = new AdminAccount([
             'admin_id'=> $data->admin_id,
             'admin_username'=>$request->get('admin_username'),
             'admin_password'=> Hash::make($request->get('admin_password'))
         ]);
-        
+
         // saving account instant
         $data_account->save();
-        
+
         // returning resource instant of admin
         return new AdminResource($data);
     }
@@ -86,13 +86,13 @@ class AdminInformationController extends Controller
     {
          // validating requested data
          $request->validate([
-            'admin_first_name'=> 'string|max:50',	
-            'admin_last_name'=> 'string|max:50',	
+            'admin_first_name'=> 'string|max:50',
+            'admin_last_name'=> 'string|max:50',
             'admin_phone'=> 'string|unique:App\Models\AdminInformation,admin_phone',
-            'admin_username'=>'string|unique:App\Models\AdminAccount,admin_username',	
+            'admin_username'=>'string|unique:App\Models\AdminAccount,admin_username',
             'admin_password,'=>'string|confirmed'
         ]);
-        
+
         // creating instance of Admin
 
         $data =AdminInformation::find($id);
@@ -104,7 +104,7 @@ class AdminInformationController extends Controller
             'admin_last_name'=>($request->get('admin_last_name')==null)?$data->admin_last_name:$request->get('admin_last_name'),
             'admin_phone'=>($request->get('admin_phone')==null)?$data->admin_phone:$request->get('admin_phone'),
         ]);
-        
+
         // updating Admin account;
 
         $data->adminAccount->update([

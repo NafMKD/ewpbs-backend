@@ -56,7 +56,7 @@ class LoginController extends Controller
                             //err
                             $response = [
                                 'status' => 'error',
-                                'message' => 'Invalida username or password',
+                                'message' => 'Invalid username or password',
                             ];
                         }else{
                             //pass emp
