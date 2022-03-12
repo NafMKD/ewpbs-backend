@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActiveBill;
 use Illuminate\Http\Request;
 use App\Models\CustomerInformationSpInformation;
 use App\Models\CustomerInformation;
+use App\Models\HistoryBill;
 
 class CustomerInformationSpInformationController extends Controller
 {
@@ -43,7 +45,7 @@ class CustomerInformationSpInformationController extends Controller
         ]);
 
         $data->save();
-        
+
         return $data;
     }
 
@@ -76,8 +78,9 @@ class CustomerInformationSpInformationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function dashboard($id)
     {
         //
+
     }
 }

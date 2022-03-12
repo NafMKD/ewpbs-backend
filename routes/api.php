@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountChangeController;
 use App\Http\Controllers\AdminEventLogController;
 use App\Http\Controllers\CustomerEventLogController;
 use App\Http\Controllers\SpcTarifController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\SpEventLogController;
 use App\Http\Controllers\GenerateBillController;
 use App\Http\Controllers\ActiveBillController;
 use App\Http\Controllers\CustomerInformationSpInformationController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HistoryBillController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Http\Request;
@@ -41,15 +43,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('customer')->group(function () {
     Route::get('/', [CustomerInformationController::class, 'index']);
     Route::get('/{id}', [CustomerInformationController::class, 'show']);
+    Route::get('/dashboard/{id}', [CustomerInformationController::class, 'dashboard']);
+    Route::get('/dashboard/bill/{id}/{month}', [CustomerInformationController::class, 'dashboardBill']);
     Route::get('/search/{id}', [CustomerInformationController::class, 'search']);
     Route::get('{id}/sp/{sp_id}/activebill', [CustomerInformationController::class, 'spBillShowActive']);
     Route::get('{id}/sp/{sp_id}/historybill', [CustomerInformationController::class, 'spBillShowHistory']);
     Route::post('', [CustomerInformationController::class, 'store']);
     Route::put('/{id}', [CustomerInformationController::class, 'update']);
+    Route::put('/customer_account/{id}', [AccountChangeController::class, 'customerAccount']);
     // customer event log Route
     Route::prefix('/eventlog')->group(function () {
-        Route::get('/customer/{id}', [CustomerEventLogController::class, 'index']); 
-        Route::get('/{id}', [CustomerEventLogController::class, 'show']); 
+        Route::get('/customer/{id}', [CustomerEventLogController::class, 'index']);
+        Route::get('/{id}', [CustomerEventLogController::class, 'show']);
         Route::post('/', [CustomerEventLogController::class, 'store']);
     });
 });
@@ -59,22 +64,25 @@ Route::prefix('customer')->group(function () {
 // service provider category Route
 Route::prefix('spc')->group(function () {
     Route::get('/', [SpcContoller::class, 'index']);
+    Route::get('/dashboard/{id}', [SpcContoller::class, 'dashboard']);
+    Route::get('/dashboard/bill/{id}/{month}', [SpcContoller::class, 'dashboardBill']);
     Route::get('/{id}', [SpcContoller::class, 'show']);
     Route::post('/', [SpcContoller::class, 'store']);
     Route::put('/{id}', [SpcContoller::class, 'update']);
+    Route::put('/spc_account/{id}', [AccountChangeController::class, 'spcAccount']);
     // spc eventlog Route
     Route::prefix('/eventlog')->group(function () {
-        Route::get('/spc/{id}', [SpcEventLogController::class, 'index']); 
-        Route::get('/{id}', [SpcEventLogController::class, 'show']); 
+        Route::get('/spc/{id}', [SpcEventLogController::class, 'index']);
+        Route::get('/{id}', [SpcEventLogController::class, 'show']);
         Route::post('/', [SpcEventLogController::class, 'store']);
     });
     // spc tarif Route
     Route::prefix('/tarif')->group(function () {
         Route::get('/spc/{id}', [SpcTarifController::class, 'index']);
-        Route::get('/{id}', [SpcTarifController::class, 'show']); 
+        Route::get('/{id}', [SpcTarifController::class, 'show']);
         Route::post('/', [SpcTarifController::class, 'store']);
         Route::put('/{id}', [SpcTarifController::class, 'update']);
-    });    
+    });
 });
 
 
@@ -84,10 +92,13 @@ Route::prefix('spc')->group(function () {
 // service provider Route
 Route::prefix('sp')->group(function () {
     Route::get('/', [SpInformaionContoller::class, 'index']);
+    Route::get('/dashboard/{id}', [SpInformaionContoller::class, 'dashboard']);
+    Route::get('/dashboard/bill/{id}/{month}', [SpInformaionContoller::class, 'dashboardBill']);
     Route::get('/{id}', [SpInformaionContoller::class, 'show']);
     Route::get('/spc/{id}', [SpInformaionContoller::class, 'spcShow']);
     Route::post('/', [SpInformaionContoller::class, 'store']);
     Route::put('/{id}', [SpInformaionContoller::class, 'update']);
+    Route::put('/sp_account/{id}', [AccountChangeController::class, 'spAccount']);
     // sp eventlog Route
     Route::prefix('/eventlog')->group(function () {
         Route::get('/sp/{id}', [SpEventLogController::class, 'index']);
@@ -112,17 +123,18 @@ Route::prefix('sp')->group(function () {
 Route::prefix('spemployee')->group(function () {
     Route::get('/', [SpEmployeeInformationController::class, 'index']);
     Route::get('/{id}', [SpEmployeeInformationController::class, 'show']);
+    Route::get('/dashboard/{id}', [SpEmployeeInformationController::class, 'dashboard']);
     Route::get('/search/{id}', [SpEmployeeInformationController::class, 'search']);
     Route::get('/sp/{id}', [SpEmployeeInformationController::class, 'spShow']);
     Route::put('/{id}', [SpEmployeeInformationController::class, 'update']);
     Route::post('/', [SpEmployeeInformationController::class, 'store']);
+    Route::put('/spemployee_account/{id}', [AccountChangeController::class, 'spEmployeeAccount']);
     // sp employee eventlog Route
     Route::prefix('/eventlog')->group(function () {
         Route::get('/spemployee/{id}', [SpEmployeeEventLogController::class, 'index']);
         Route::get('/{id}', [SpEmployeeEventLogController::class, 'show']);
         Route::post('/', [SpEmployeeEventLogController::class, 'store']);
     });
-    
 });
 
 
@@ -133,7 +145,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/', [AdminInformationController::class, 'index']);
     Route::get('/{id}', [AdminInformationController::class, 'show']);
     Route::post('/', [AdminInformationController::class, 'store']);
-    Route::put('/{id}', [AdminInformationController::class, 'update']); 
+    Route::put('/{id}', [AdminInformationController::class, 'update']);
+    Route::put('/admin_account/{id}', [AccountChangeController::class, 'adminAccount']);
     // Admin event log Route
     Route::prefix('/eventlog')->group(function () {
         Route::get('/admin/{id}', [AdminEventLogController::class, 'index']);
@@ -169,5 +182,7 @@ Route::get('/historybill/customer/{id}', [HistoryBillController::class, 'cusomer
 Route::post('/customersprelation', [CustomerInformationSpInformationController::class, 'store']);
 Route::get('/customersprelation/sp/{id}', [CustomerInformationSpInformationController::class, 'spShow']);
 
+Route::get('/dashboard/count/{case}', [DashboardController::class, 'getCount']);
+Route::get('/dashboard/allactiveincome/{month}', [DashboardController::class, 'getAllActiveMonthIncome']);
+Route::get('/dashboard/allhistoryincome/{month}', [DashboardController::class, 'getAllHistoryMonthIncome']);
 Route::get('/login', [LoginController::class, 'logIn']);
-

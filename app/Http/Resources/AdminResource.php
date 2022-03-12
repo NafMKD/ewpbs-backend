@@ -15,12 +15,14 @@ class AdminResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'admin_id'=>(string)$this->admin_id,
-            'admin_first_name'=>$this->admin_first_name,
-            'admin_last_name'=>$this->admin_last_name,
-            'admin_phone'=>$this->admin_phone,
+            'admin_id' => (string)$this->admin_id,
+            'admin_first_name' => $this->admin_first_name,
+            'admin_last_name' => $this->admin_last_name,
+            'admin_phone' => $this->admin_phone,
             "admin_account" => $this->adminAccount,
-            "admin_event" => $this->adminEventLog
+            "admin_event" => $this->adminEventLog,
+            "created_at" => $this->created_at,
+            "updated_at" => $this->updated_at
         ];
     }
 }

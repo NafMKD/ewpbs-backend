@@ -22,7 +22,7 @@ class CustomerInformationController extends Controller
         // returning all cutomers
         return CustomerInformation::all();
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +31,7 @@ class CustomerInformationController extends Controller
     public function search($id)
     {
         // returning all cutomers
-        return CustomerInformation::where('customer_id','like','%'.$id.'%')->get();
+        return CustomerInformation::where('customer_id', 'like', '%' . $id . '%')->get();
     }
 
     /**
@@ -42,7 +42,7 @@ class CustomerInformationController extends Controller
     public function spBillShowActive($id, $sp_id)
     {
         // returning all cutomers
-        return ActiveBill::where('sp_id', $sp_id)->where('customer_id',$id)->get();
+        return ActiveBill::where('sp_id', $sp_id)->where('customer_id', $id)->get();
     }
 
     /**
@@ -53,7 +53,7 @@ class CustomerInformationController extends Controller
     public function spBillShowHistory($id, $sp_id)
     {
         // returning all cutomers
-        return HistoryBill::where('sp_id', $sp_id)->where('customer_id',$id)->get();
+        return HistoryBill::where('sp_id', $sp_id)->where('customer_id', $id)->get();
     }
 
     /**
@@ -83,10 +83,10 @@ class CustomerInformationController extends Controller
             'customer_middle_name' => $request->get('customer_middle_name'),
             'customer_last_name' => $request->get('customer_last_name'),
             'customer_phone' => $request->get('customer_phone'),
-            'customer_region'=> $request->get('customer_region'),
-            'customer_town'=> $request->get('customer_town'),
-            'customer_kebele'=> $request->get('customer_kebele'),
-            'customer_house_no'=> $request->get('customer_house_no')
+            'customer_region' => $request->get('customer_region'),
+            'customer_town' => $request->get('customer_town'),
+            'customer_kebele' => $request->get('customer_kebele'),
+            'customer_house_no' => $request->get('customer_house_no')
         ]);
 
         // saving the data instance
@@ -101,7 +101,7 @@ class CustomerInformationController extends Controller
 
         // saving the data_account instance
         $data_account->save();
-        
+
         // returning resource instance of customer
         return new CustomersResource($data);
     }
@@ -146,25 +146,24 @@ class CustomerInformationController extends Controller
 
         // updating customer information
         $data->update([
-            'customer_first_name' => ($request->get('customer_first_name')==null)?$data->customer_first_name:$request->get('customer_first_name'),
-            'customer_middle_name' =>  ($request->get('customer_middle_name')==null)?$data->customer_middle_name:$request->get('customer_middle_name'),
-            'customer_last_name' =>  ($request->get('customer_last_name')==null)?$data->customer_last_name:$request->get('customer_last_name'),
-            'customer_phone' =>  ($request->get('customer_phone')==null)?$data->customer_phone:$request->get('customer_phone'),
-            "customer_region" =>  ($request->get('customer_region')==null)?$data->customer_region:$request->get('customer_region'),
-            "customer_town" => ($request->get('customer_town')==null)?$data->customer_town:$request->get('customer_town'),
-            "customer_kebele" =>  ($request->get('customer_kebele')==null)?$data->customer_kebele:$request->get('customer_kebele'),
-            "customer_house_no" =>  ($request->get('customer_house_no')==null)?$data->customer_house_no:$request->get('customer_house_no'),
+            'customer_first_name' => ($request->get('customer_first_name') == null) ? $data->customer_first_name : $request->get('customer_first_name'),
+            'customer_middle_name' => ($request->get('customer_middle_name') == null) ? $data->customer_middle_name : $request->get('customer_middle_name'),
+            'customer_last_name' => ($request->get('customer_last_name') == null) ? $data->customer_last_name : $request->get('customer_last_name'),
+            'customer_phone' => ($request->get('customer_phone') == null) ? $data->customer_phone : $request->get('customer_phone'),
+            "customer_region" => ($request->get('customer_region') == null) ? $data->customer_region : $request->get('customer_region'),
+            "customer_town" => ($request->get('customer_town') == null) ? $data->customer_town : $request->get('customer_town'),
+            "customer_kebele" => ($request->get('customer_kebele') == null) ? $data->customer_kebele : $request->get('customer_kebele'),
+            "customer_house_no" => ($request->get('customer_house_no') == null) ? $data->customer_house_no : $request->get('customer_house_no'),
         ]);
 
         // updating customer account
         $data->customerAccount->update([
-            'customer_username' => ($request->get('customer_username')==null)?$data->customerAccount->customer_username:$request->get('customer_username'),
-            'customer_password' => ($request->get('customer_password')==null)?$data->customerAccount->customer_password:Hash::make($request->get('customer_password')),
+            'customer_username' => ($request->get('customer_username') == null) ? $data->customerAccount->customer_username : $request->get('customer_username'),
+            'customer_password' => ($request->get('customer_password') == null) ? $data->customerAccount->customer_password : Hash::make($request->get('customer_password')),
         ]);
 
         // returning resource instance of customer
         return new CustomersResource($data);
-
     }
 
     /**
@@ -173,8 +172,39 @@ class CustomerInformationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function dashboard($id)
     {
         //
+        $paid = 0;
+        $ac = 0;
+        $ps = HistoryBill::where('customer_id', $id)->get();
+        $as = ActiveBill::where('customer_id', $id)->get();
+        foreach ($ps as $p) {
+            $paid++;
+        }
+
+        foreach ($as as $a) {
+            $ac++;
+        }
+
+        return [$paid, $ac];
+    }
+
+    public function dashboardBill($id, $month)
+    {
+        $activeBill = 0;
+        $historyBill = 0;
+
+        $datacust = ActiveBill::where('customer_id', $id)->whereMonth('ac_month_year', '=', $month)->get();
+        $dataemp = HistoryBill::where('customer_id', $id)->whereMonth('hs_month_year', '=', $month)->get();
+        foreach ($datacust as $dc) {
+            $activeBill += $dc->ac_amount_birr;
+        }
+        foreach ($dataemp as $de) {
+            $historyBill += $de->hs_amount_birr;
+        }
+
+        $all =  $activeBill + $historyBill;
+        return [$all, $activeBill, $historyBill];
     }
 }

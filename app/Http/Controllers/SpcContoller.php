@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\SpcResource;
+use App\Models\ActiveBill;
+use App\Models\CustomerInformation;
+use App\Models\CustomerInformationSpInformation;
+use App\Models\HistoryBill;
 use App\Models\SpcInformation;
 use App\Models\SpcAccount;
+use App\Models\SpEmployeeInformation;
 use Illuminate\Support\Facades\Hash;
 
 class SpcContoller extends Controller
@@ -94,13 +99,13 @@ class SpcContoller extends Controller
 
         // updating instance of spc 
         $data->update([
-            'spc_name' => ($request->get('spc_name')==null)?$data->spc_name:$request->get('spc_name')
+            'spc_name' => ($request->get('spc_name') == null) ? $data->spc_name : $request->get('spc_name')
         ]);
 
         // updating instance of spc account
         $data->spcAccount->update([
-            'spc_username' => ($request->get('spc_username')==null)?$data->spcAccount->spc_username:$request->get('spc_username'),
-            'spc_password' => ($request->get('spc_password')==null)?$data->spcAccount->spc_password:Hash::make($request->get('spc_password'))
+            'spc_username' => ($request->get('spc_username') == null) ? $data->spcAccount->spc_username : $request->get('spc_username'),
+            'spc_password' => ($request->get('spc_password') == null) ? $data->spcAccount->spc_password : Hash::make($request->get('spc_password'))
         ]);
 
         // returning updated instance with instance of resource
@@ -113,8 +118,47 @@ class SpcContoller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function dashboard($id)
     {
         //
+        $sp_count = 0;
+        $cus_count = 0;
+        $tech_count = 0;
+        $data = new SpInformaionContoller();
+        $data = $data->spcShow($id);
+        foreach ($data as $d) {
+            $sp_count++;
+            $datacust = CustomerInformationSpInformation::where('sp_id', $d->sp_id)->get();
+            $dataemp = SpEmployeeInformation::where('sp_id', $d->sp_id)->get();
+            foreach ($datacust as $dc) {
+                $cus_count++;
+            }
+            foreach ($dataemp as $de) {
+                $tech_count++;
+            }
+        }
+
+        return [$sp_count, $cus_count, $tech_count];
+    }
+
+    public function dashboardBill($id, $month)
+    {
+        $activeBill = 0;
+        $historyBill = 0;
+
+        $data = new SpInformaionContoller();
+        $data = $data->spcShow($id);
+        foreach ($data as $d) {
+            $datacust = ActiveBill::where('sp_id', $d->sp_id)->whereMonth('ac_month_year', '=', $month)->get();
+            $dataemp = HistoryBill::where('sp_id', $d->sp_id)->whereMonth('hs_month_year', '=', $month)->get();
+            foreach ($datacust as $dc) {
+                $activeBill += $dc->ac_amount_birr;
+            }
+            foreach ($dataemp as $de) {
+                $historyBill += $de->hs_amount_birr;
+            }
+        }
+        $all =  $activeBill + $historyBill;
+        return [$all, $activeBill, $historyBill];
     }
 }

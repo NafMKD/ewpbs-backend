@@ -40,7 +40,7 @@ class MeterRecordInformaionController extends Controller
     public function spShowActive($id)
     {
         // returning  meter record instance
-        return SpInformation::where('sp_information.sp_id', $id)->join('sp_employee_information', 'sp_employee_information.sp_id', 'sp_information.sp_id')->join('meter_record_information', 'meter_record_information.sp_emp_id', 'sp_employee_information.sp_emp_id')->join('meter_information','meter_information.meter_id', 'meter_record_information.meter_id')->join('customer_information','customer_information.customer_id', 'meter_information.customer_id')->where('status', 1)->get();
+        return SpInformation::where('sp_information.sp_id', $id)->join('sp_employee_information', 'sp_employee_information.sp_id', 'sp_information.sp_id')->join('meter_record_information', 'meter_record_information.sp_emp_id', 'sp_employee_information.sp_emp_id')->join('meter_information', 'meter_information.meter_id', 'meter_record_information.meter_id')->join('customer_information', 'customer_information.customer_id', 'meter_information.customer_id')->where('status', 1)->get();
     }
 
     /**
@@ -51,7 +51,7 @@ class MeterRecordInformaionController extends Controller
     public function spShowCalculated($id)
     {
         // returning  meter record instance
-        return SpInformation::where('sp_information.sp_id', $id)->join('sp_employee_information', 'sp_employee_information.sp_id', 'sp_information.sp_id')->join('meter_record_information', 'meter_record_information.sp_emp_id', 'sp_employee_information.sp_emp_id')->join('meter_information','meter_information.meter_id', 'meter_record_information.meter_id')->join('customer_information','customer_information.customer_id', 'meter_information.customer_id')->where('status', 0)->get();
+        return SpInformation::where('sp_information.sp_id', $id)->join('sp_employee_information', 'sp_employee_information.sp_id', 'sp_information.sp_id')->join('meter_record_information', 'meter_record_information.sp_emp_id', 'sp_employee_information.sp_emp_id')->join('meter_information', 'meter_information.meter_id', 'meter_record_information.meter_id')->join('customer_information', 'customer_information.customer_id', 'meter_information.customer_id')->where('status', 0)->get();
     }
 
     /**
@@ -64,21 +64,22 @@ class MeterRecordInformaionController extends Controller
     {
         // validating request
         $request->validate([
-            'sp_emp_id' => 'required|integer|exists:\App\Models\SpEmployeeInformation,sp_emp_id', 
-            'meter_id' => 'required|integer|exists:\App\Models\MeterInformation,meter_id', 
-            'meter_reading' => 'required|integer', 
-            'meter_reading_month_year' => ['required','date_format:Y-m-d',Rule::unique('meter_record_information')->where(function ($query) use ($request) {
-    return $query->where('meter_id', $request->get('meter_id'));})], 
+            'sp_emp_id' => 'required|integer|exists:\App\Models\SpEmployeeInformation,sp_emp_id',
+            'meter_id' => 'required|integer|exists:\App\Models\MeterInformation,meter_id',
+            'meter_reading' => 'required|integer',
+            'meter_reading_month_year' => ['required', 'date_format:Y-m-d', Rule::unique('meter_record_information')->where(function ($query) use ($request) {
+                return $query->where('meter_id', $request->get('meter_id'));
+            })],
             'meter_reading_date' => 'required|date_format:Y-m-d'
         ]);
 
         // creating new instance
         $data = MeterRecordInformation::create([
-            'sp_emp_id' => $request->get('sp_emp_id'), 
-            'meter_id' => $request->get('meter_id'), 
-            'meter_reading' => $request->get('meter_reading'), 
-            'status' => 1, 
-            'meter_reading_month_year' => $request->get('meter_reading_month_year'), 
+            'sp_emp_id' => $request->get('sp_emp_id'),
+            'meter_id' => $request->get('meter_id'),
+            'meter_reading' => $request->get('meter_reading'),
+            'status' => 1,
+            'meter_reading_month_year' => $request->get('meter_reading_month_year'),
             'meter_reading_date' => $request->get('meter_reading_date')
         ]);
 
@@ -130,6 +131,6 @@ class MeterRecordInformaionController extends Controller
     public function status($status)
     {
         // returning  meter record instance
-        return MeterRecordInformation::where('status',$status)->get();
+        return MeterRecordInformation::where('status', $status)->get();
     }
 }
